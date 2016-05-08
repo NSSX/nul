@@ -1,0 +1,44 @@
+  
+  void rotate(SceneNode node, char axis, float angle ) {
+    Matrix4x4 rotation = new Matrix4x4();
+    float toRadian = 2*PI/360.0;
+    int i;
+    
+    for (i = 0; i < 2; i++) {
+      switch(axis) {
+      case 'x':
+      	   rotation.data[0][0] = 1;
+                rotation.data[1][1] = cos(angle*toRadian);
+				    rotation.data[1][2] = -sin(angle*toRadian);
+				    			rotation.data[2][1] = sin(angle*toRadian);
+									    rotation.data[2][2] = cos(angle*toRadian);
+									    			rotation.data[3][3] = 1;
+														    break;
+        case 'y':
+	     rotation.data[0][0] = cos(angle*toRadian);
+	     			 rotation.data[0][2] = sin(angle*toRadian);
+				 		     rotation.data[1][1] = 1;
+						     			 rotation.data[2][0] = -sin(angle*toRadian);
+									 		     rotation.data[2][2] = cos(angle*toRadian);
+											     			 rotation.data[3][3] = 1;
+														 		     break;
+        case 'z':
+	        rotation.data[0][0] = cos(angle*toRadian);
+				    rotation.data[0][1] = -sin(angle*toRadian);
+				    			rotation.data[1][0] = sin(angle*toRadian);
+									    rotation.data[1][1] = cos(angle*toRadian);
+									    			rotation.data[2][2] = 1;
+														    rotation.data[3][3] = 1;
+														    			break;
+																	}
+																	if (i == 0) {
+																	    node.trans = node.trans.mul(rotation);  
+            angle = -angle;
+        } 
+	else {
+	    node.invTrans = rotation.mul(node.invTrans); 
+	    }		  
+    } 
+    
+    
+  }
